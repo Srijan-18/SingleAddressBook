@@ -52,7 +52,7 @@ public class AddressBookMain {
             return false;
     }
 
-    //METHOD TO ADD A PERSON IN THE ADDRESSBOOK
+    //METHOD TO ADD A PERSON IN THE ADDRESS BOOK
 
     public void addPerson(){
         System.out.print("\n\t\t\t\tEnter FIRST NAME --> ");
