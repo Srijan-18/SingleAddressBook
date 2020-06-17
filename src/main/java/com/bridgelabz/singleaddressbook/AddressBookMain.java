@@ -23,7 +23,7 @@ public class AddressBookMain {
     }
     //METHOD TO DISPLAY MENU OF OPERATIONS
     public boolean addressbookMenu(){
-        System.out.print("\n\t\t\t\tEnter : " +
+        System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice: " +
                         "\n\t\t\t\t1 --> Add Details of a new Person" +
                         "\n\t\t\t\t2 --> Edit Details of an existing Person" +
                         "\n\t\t\t\t3 --> Delete an existing Person from AddressBook" +
@@ -42,7 +42,7 @@ public class AddressBookMain {
                 System.out.print("\n\t\t\t\t## INVALID INPUT ##");
 
         }
-        System.out.print("\n\n\t\t\t\tEnter:" +
+        System.out.print("\n\n\t\t\t\tEnter the corresponding number to make the choice:" +
                         "\n\t\t\t\t1 --> Go To AddressBook Menu" +
                         "\n\t\t\t\tAny Other Number to exit "+
                         "\n\t\t\t\tYOUR CHOICE :");
@@ -59,18 +59,23 @@ public class AddressBookMain {
         String firstName=takeInput.nextLine();
         System.out.print("\n\t\t\t\tEnter LAST NAME --> ");
         String lastName=takeInput.nextLine();
-        System.out.print("\n\t\t\t\tEnter PHONE NUMBER --> ");
-        long phoneNumber=Long.parseLong(takeInput.nextLine());
-        System.out.print("\n\t\t\t\tEnter HOUSE NUMBER AND STREET ADDRESS  --> ");
-        String streetAddress=takeInput.nextLine();
-        System.out.print("\n\t\t\t\tEnter CITY  --> ");
-        String city=takeInput.nextLine();
-        System.out.print("\n\t\t\t\tEnter STATE  --> ");
-        String state=takeInput.nextLine();
-        System.out.print("\n\t\t\t\tEnter ZIP CODE  --> ");
-        int zip=Integer.parseInt(takeInput.nextLine());
-        Person currentPerson= new Person(firstName,lastName,phoneNumber,streetAddress,city,state,zip);
-        addressBook.add(currentPerson);
+        if(!equals(firstName+" "+lastName)) {
+            System.out.print("\n\t\t\t\tEnter PHONE NUMBER --> ");
+            long phoneNumber = Long.parseLong(takeInput.nextLine());
+            System.out.print("\n\t\t\t\tEnter HOUSE NUMBER AND STREET ADDRESS  --> ");
+            String streetAddress = takeInput.nextLine();
+            System.out.print("\n\t\t\t\tEnter CITY  --> ");
+            String city = takeInput.nextLine();
+            System.out.print("\n\t\t\t\tEnter STATE  --> ");
+            String state = takeInput.nextLine();
+            System.out.print("\n\t\t\t\tEnter ZIP CODE  --> ");
+            int zip = Integer.parseInt(takeInput.nextLine());
+            Person currentPerson = new Person(firstName, lastName, phoneNumber, streetAddress, city, state, zip);
+            addressBook.add(currentPerson);
+        }
+        else{
+            System.out.print("\n\t\t\t\t ## NAME ALREADY EXISTS ## ");
+        }
 
     }
 
@@ -81,7 +86,7 @@ public class AddressBookMain {
         String name = takeInput.nextLine();
         for (int index=0 ; index<addressBook.size(); index++) {
             if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastname()).equalsIgnoreCase(name)) {
-                System.out.print("\n\t\t\t\tEnter following inputs to edit respective intended field:" +
+                System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
                         "\n\t\t\t\t1 --> PHONE NUMBER" +
                         "\n\t\t\t\t2 --> HOUSE NUMBER & STREET ADDRESS" +
                         "\n\t\t\t\t3 --> CITY" +
@@ -123,14 +128,24 @@ public class AddressBookMain {
         System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to remove from AddressBook --> ");
         String name = takeInput.nextLine();
         boolean deletionDone = false;
-        for (int index = 0; index < addressBook.size(); index++){
+        for (int index = 0; index < addressBook.size(); index++) {
             if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastname()).equalsIgnoreCase(name)) {
                 addressBook.remove(index);
                 deletionDone = true;
                 break;
             }
         }
-        if (deletionDone==false)
+        if (deletionDone == false)
             System.out.print("\n\t\t\t\t## NO SUCH PERSON IN LIST ##");
+    }
+    // METHOD TO CHECK IF NAME ALREADY PRESENT IN ADDRESSBOOK (OVERRIDING THE EXISTING equals() METHOD OF OBJECT CLASS)
+    @Override
+    public boolean equals(Object o) {
+
+        for (Person currentPerson:addressBook) {
+            if ((currentPerson.getFirstName()+" "+currentPerson.getLastname()).equalsIgnoreCase((String) o))
+                return true;
+        }
+        return false;
     }
 }
