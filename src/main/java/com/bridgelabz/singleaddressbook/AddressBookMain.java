@@ -1,6 +1,7 @@
 package com.bridgelabz.singleaddressbook;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class AddressBookMain {
@@ -27,6 +28,7 @@ public class AddressBookMain {
                         "\n\t\t\t\t1 --> Add Details of a new Person" +
                         "\n\t\t\t\t2 --> Edit Details of an existing Person" +
                         "\n\t\t\t\t3 --> Delete an existing Person from AddressBook" +
+                        "\n\t\t\t\t4 --> Sort AddressBook by Name" +
                         "\n\t\t\t\tYOUR CHOICE --> ");;
         switch (Integer.parseInt(takeInput.nextLine())){
             case 1:
@@ -38,18 +40,28 @@ public class AddressBookMain {
             case 3:
                 deletePerson();
                 break;
+            case 4:
+                sortByName();
+                displayAddressBook();
+                break;
             default:
                 System.out.print("\n\t\t\t\t## INVALID INPUT ##");
 
         }
         System.out.print("\n\n\t\t\t\tEnter the corresponding number to make the choice:" +
-                        "\n\t\t\t\t1 --> Go To AddressBook Menu" +
+                        "\n\t\t\t\t1 --> Display AddressBook and go to AddressBook Menu" +
+                        "\n\t\t\t\t2 --> Go To AddressBook Menu" +
                         "\n\t\t\t\tAny Other Number to exit "+
                         "\n\t\t\t\tYOUR CHOICE :");
-        if(Integer.parseInt(takeInput.nextLine()) == 1)
-            return true;
-        else
-            return false;
+        switch(Integer.parseInt(takeInput.nextLine()) == 1){
+            case 1:
+                displayAddressBook();
+            case 2:
+                return true;
+                break;
+            default:
+                return false;
+        }
     }
 
     //METHOD TO ADD A PERSON IN THE ADDRESS BOOK
@@ -147,5 +159,15 @@ public class AddressBookMain {
                 return true;
         }
         return false;
+    }
+    // METHOD TO SORT THE ADDRESS BOOK BY NAME
+    public void sortByName(){
+       addressBook.sort(Comparator.comparing(Person::getFirstName).thenComparing(Person::getLastname));
+    }
+    // METHOD TO DISPLAY THE ADDRESS BOOK
+    public void displayAddressBook(){
+        for (Person person:addressBook) {
+            System.out.print("\n\n"+person);
+        }
     }
 }

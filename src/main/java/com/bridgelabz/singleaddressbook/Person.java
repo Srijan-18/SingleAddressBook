@@ -83,12 +83,12 @@ public class Person {
 // OVERRIDING toString TO GET RETURN IN DESIRED FORMAT
     @Override
     public String toString() {
-        return "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", phoneNumber=" + phoneNumber +
-                ", streetAddress='" + streetAddress + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip=" + zip;
+        return "First Name: " + firstname +
+                "\tLastname: " + lastname +
+                "\nPhone Number: " + phoneNumber +
+                "\nAddress:" + streetAddress +
+                "\tCity: " + city +
+                "\tState: " + state +
+                "\tZip: " + zip;
     }
 }
