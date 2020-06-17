@@ -1,29 +1,55 @@
 package com.bridgelabz.singleaddressbook;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBookMain {
-    private Person person;
+    private ArrayList<Person> addressBook = new ArrayList<Person>();
     private Scanner takeInput=new Scanner(System.in);
 
     //MAIN METHOD
 
-    public static void main (String args[]){
+    public static void main (String args[]) {
         System.out.print("\n\n\t\t\t\t*****WELECOME TO ADDRESSBOOK PROGRAM*****\n\n");
-        AddressBookMain obj=new AddressBookMain();
+        AddressBookMain obj = new AddressBookMain();
         obj.addPerson();
+        boolean choice=true;
+        while(choice==true) {
+            if (obj.addressBook.size() > 0)
+                choice = obj.addressbookMenu();
+            else
+                obj.addPerson();
+        }
+    }
+    //METHOD TO DISPLAY MENU OF OPERATIONS
+    public boolean addressbookMenu(){
         System.out.print("\n\t\t\t\tEnter : " +
-                        "\n\t\t\t\t1 --> Edit Details of a Person\n"+
-                        "\t\t\t\tYOUR CHOICE --> ");;
-        switch (Integer.parseInt(obj.takeInput.nextLine())){
+                        "\n\t\t\t\t1 --> Add Details of a new Person" +
+                        "\n\t\t\t\t2 --> Edit Details of an existing Person" +
+                        "\n\t\t\t\t3 --> Delete an existing Person from AddressBook" +
+                        "\n\t\t\t\tYOUR CHOICE --> ");;
+        switch (Integer.parseInt(takeInput.nextLine())){
             case 1:
-                obj.editPersonDetails();
-                System.out.print("\n"+obj.person+"\n\n");
-            break;
+                addPerson();
+                break;
+            case 2:
+                editPersonDetails();
+                break;
+            case 3:
+                deletePerson();
+                break;
             default:
                 System.out.print("\n\t\t\t\t## INVALID INPUT ##");
 
         }
+        System.out.print("\n\n\t\t\t\tEnter:" +
+                        "\n\t\t\t\t1 --> Go To AddressBook Menu" +
+                        "\n\t\t\t\tAny Other Number to exit "+
+                        "\n\t\t\t\tYOUR CHOICE :");
+        if(Integer.parseInt(takeInput.nextLine()) == 1)
+            return true;
+        else
+            return false;
     }
 
     //METHOD TO ADD A PERSON IN THE ADDRESSBOOK
@@ -43,51 +69,68 @@ public class AddressBookMain {
         String state=takeInput.nextLine();
         System.out.print("\n\t\t\t\tEnter ZIP CODE  --> ");
         int zip=Integer.parseInt(takeInput.nextLine());
-        person= new Person(firstName,lastName,phoneNumber,streetAddress,city,state,zip);
+        Person currentPerson= new Person(firstName,lastName,phoneNumber,streetAddress,city,state,zip);
+        addressBook.add(currentPerson);
 
     }
 
     //METHOD TO EDIT A PERSON'S DETAILS(EXCEPT NAME)
 
-    public void editPersonDetails()
-    {
+    public void editPersonDetails() {
         System.out.print("\n\t\t\t\tEnter the FULL NAME of person to edit --> ");
-        String name=takeInput.nextLine();
-        if((person.getFirstName()+" "+person.getLastname()).equalsIgnoreCase(name))
-        {
-            System.out.print("\n\t\t\t\tEnter following inputs to edit respective intended field:\n" +
-                            "\t\t\t\t1 --> PHONE NUMBER\n" +
-                            "\t\t\t\t2 --> HOUSE NUMBER & STREET ADDRESS\n" +
-                            "\t\t\t\t3 --> CITY\n" +
-                            "\t\t\t\t4 --> STATE\n" +
-                            "\t\t\t\t5 --> ZIP\n"+
-                            "\t\t\t\tYOUR CHOICE --> ");
-            int editChoice=Integer.parseInt(takeInput.nextLine());
-            switch (editChoice){
-                case 1:
-                    System.out.print("\n\t\t\t\tEnter NEW PHONE NUMBER --> ");
-                    person.setPhoneNumber(Long.parseLong(takeInput.nextLine()));
-                break;
-                case 2:
-                    System.out.print("\n\t\t\t\tEnter NEW HOUSE NUMBER AND STREET ADDRESS --> ");
-                    person.setStreetAddress(takeInput.nextLine());
-                break;
-                case 3:
-                    System.out.print("\n\t\t\t\tEnter NEW CITY --> ");
-                    person.setCity(takeInput.nextLine());
-                break;
-                case 4:
-                    System.out.print("\n\t\t\t\tEnter NEW STATE --> ");
-                    person.setState(takeInput.nextLine());
-                break;
-                case 5:
-                    System.out.println("\n\t\t\t\tEnter NEW ZIP --> ");
-                    person.setZip(Integer.parseInt(takeInput.nextLine()));
-                break;
-                default:
-                    System.out.print("\n\t\t\t\t## INVALID INPUT ##");
-            }
+        String name = takeInput.nextLine();
+        for (int index=0 ; index<addressBook.size(); index++) {
+            if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastname()).equalsIgnoreCase(name)) {
+                System.out.print("\n\t\t\t\tEnter following inputs to edit respective intended field:" +
+                        "\n\t\t\t\t1 --> PHONE NUMBER" +
+                        "\n\t\t\t\t2 --> HOUSE NUMBER & STREET ADDRESS" +
+                        "\n\t\t\t\t3 --> CITY" +
+                        "\n\t\t\t\t4 --> STATE" +
+                        "\n\t\t\t\t5 --> ZIP" +
+                        "\n\t\t\t\tYOUR CHOICE --> ");
+                int editChoice = Integer.parseInt(takeInput.nextLine());
+                switch (editChoice) {
+                    case 1:
+                        System.out.print("\n\t\t\t\tEnter NEW PHONE NUMBER --> ");
+                        addressBook.get(index).setPhoneNumber(Long.parseLong(takeInput.nextLine()));
+                        break;
+                    case 2:
+                        System.out.print("\n\t\t\t\tEnter NEW HOUSE NUMBER AND STREET ADDRESS --> ");
+                        addressBook.get(index).setStreetAddress(takeInput.nextLine());
+                        break;
+                    case 3:
+                        System.out.print("\n\t\t\t\tEnter NEW CITY --> ");
+                        addressBook.get(index).setCity(takeInput.nextLine());
+                        break;
+                    case 4:
+                        System.out.print("\n\t\t\t\tEnter NEW STATE --> ");
+                        addressBook.get(index).setState(takeInput.nextLine());
+                        break;
+                    case 5:
+                        System.out.println("\n\t\t\t\tEnter NEW ZIP --> ");
+                        addressBook.get(index).setZip(Integer.parseInt(takeInput.nextLine()));
+                        break;
+                    default:
+                        System.out.print("\n\t\t\t\t## INVALID INPUT ##");
+                }
 
+            }
         }
+    }
+    //METHOD TO DELETE A PERSON
+
+    public void deletePerson() {
+        System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to remove from AddressBook --> ");
+        String name = takeInput.nextLine();
+        boolean deletionDone = false;
+        for (int index = 0; index < addressBook.size(); index++){
+            if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastname()).equalsIgnoreCase(name)) {
+                addressBook.remove(index);
+                deletionDone = true;
+                break;
+            }
+        }
+        if (deletionDone==false)
+            System.out.print("\n\t\t\t\t## NO SUCH PERSON IN LIST ##");
     }
 }
