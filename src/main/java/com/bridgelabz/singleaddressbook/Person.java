@@ -10,7 +10,8 @@ public class Person {
     private String city;
     private String state;
     private int zip;
- // PARAMETERIZED CONSTRUCTOR TO INITIALISE THE VARIABLES
+
+    // PARAMETERIZED CONSTRUCTOR TO INITIALISE THE VARIABLES
     public Person (String firstName,String lastName,long phoneNumber,String streetAddress,String city,String state,int zip){
         setFirstname(firstName);
         setLastname(lastName);
@@ -22,7 +23,7 @@ public class Person {
 
 }
 
-//GETTER AND SETTER FUNCTIONS FOR EACH VARIABLE RESPECTIVELY
+//GETTER AND SETTER METHODS FOR EACH VARIABLE RESPECTIVELY
 
     public void setFirstname(String firstname) {
         this.firstname = firstname;
