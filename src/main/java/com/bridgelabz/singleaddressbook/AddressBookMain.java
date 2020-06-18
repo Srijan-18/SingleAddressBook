@@ -296,7 +296,7 @@ public class AddressBookMain {
             }
             if(!entryFound)
             {
-                System.out.print("\n\t\t\t\tNo Such COmbination of Entries Exist");
+                System.out.print("\n\t\t\t\tNo Such Combination of Entries Exist");
             }
         }
     }
