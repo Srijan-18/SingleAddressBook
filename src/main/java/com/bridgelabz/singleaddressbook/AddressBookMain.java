@@ -258,6 +258,7 @@ public class AddressBookMain {
             cityAndPerson.put(person.getCity(),person);
             stateAndPerson.put(person.getState(),person);
         }
+        boolean entryFound=false;
         System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
                         "\n\t\t\t\t1 --> Search in a CITY" +
                         "\n\t\t\t\t2 --> Search in a STATE");
@@ -271,6 +272,7 @@ public class AddressBookMain {
                         if (city.equalsIgnoreCase(cityentry.getKey())) {
                             if ((cityentry.getValue().getFirstName() + " " + cityentry.getValue().getLastName()).equalsIgnoreCase(name)) {
                                 System.out.print("\n\n" + cityentry.getValue());
+                                entryFound=true;
                             }
                         }
                     }
@@ -284,12 +286,17 @@ public class AddressBookMain {
                         if (state.equalsIgnoreCase(stateentry.getKey())) {
                             if ((stateentry.getValue().getFirstName() + " " + stateentry.getValue().getLastName()).equalsIgnoreCase(name)) {
                                 System.out.print("\n\n" + stateentry.getValue());
+                                entryFound=true;
                             }
                         }
                     }
                     break;
                 default:
                     System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
+            }
+            if(!entryFound)
+            {
+                System.out.print("\n\t\t\t\tNo Such COmbination of Entries Exist");
             }
         }
     }
