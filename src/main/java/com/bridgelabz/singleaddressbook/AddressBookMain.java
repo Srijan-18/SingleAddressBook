@@ -4,24 +4,25 @@ import java.util.*;
 
 public class AddressBookMain {
     private ArrayList<Person> addressBook = new ArrayList<Person>();
-    private Scanner takeInput=new Scanner(System.in);
-    private HashMap<String,Person> cityAndPerson=new HashMap<String, Person>();
-    private HashMap<String,Person> stateAndPerson=new HashMap<String, Person>();
+    private Scanner takeInput = new Scanner(System.in);
+    private HashMap<String, Person> cityAndPerson = new HashMap<String, Person>();
+    private HashMap<String, Person> stateAndPerson = new HashMap<String, Person>();
 
     // MAIN METHOD
 
-    public static void main (String args[]) {
+    public static void main(String args[]) {
         System.out.print("\n\n\t\t\t\t*****WELECOME TO ADDRESSBOOK PROGRAM*****\n\n");
         AddressBookMain obj = new AddressBookMain();
         obj.addPerson();
-        boolean choice=true;
-        while(choice==true) {
+        boolean choice = true;
+        while (choice == true) {
             if (obj.addressBook.size() > 0)
                 choice = obj.addressbookMenu();
             else
                 obj.addPerson();
         }
     }
+
     // METHOD TO DISPLAY MENU OF OPERATIONS
     public boolean addressbookMenu() {
         System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice: " +
@@ -30,6 +31,7 @@ public class AddressBookMain {
                 "\n\t\t\t\t3 --> Delete an existing Person from AddressBook" +
                 "\n\t\t\t\t4 --> Sort AddressBook" +
                 "\n\t\t\t\t5 --> Display AddressBook" +
+                "\n\t\t\t\t6 --> Search for a person" +
                 "\n\t\t\t\tYOUR CHOICE --> ");
         switch (Integer.parseInt(takeInput.nextLine())) {
             case 1:
@@ -68,40 +70,44 @@ public class AddressBookMain {
                         System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
                 }
                 break;
-                    case 5:
-                        System.out.print("\n\t\t\t\tEnter the corresponding Number to make the choice: " +
-                                        "\n\t\t\t\t1 --> Display complete list " +
-                                        "\n\t\t\t\t2 --> Display only of paticular CITY and STATE" +
-                                        "\n\t\t\t\tYOUR CHOICE --> ");
-                        switch (Integer.parseInt(takeInput.nextLine())){
-                            case 1:
-                                displayAddressBook();
-                                break;
-                            case 2:
-                                viewByCityAndState();
-                                break;
-                            default:
-                                System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
-                        }
-                        break;
-                    default:
-                        System.out.print("\n\t\t\t\t## INVALID INPUT ##");
-
-                }
-                System.out.print("\n\n\t\t\t\tEnter the corresponding number to make the choice:" +
-                        "\n\t\t\t\t1 --> Display AddressBook and go to AddressBook Menu" +
-                        "\n\t\t\t\t2 --> Go To AddressBook Menu" +
-                        "\n\t\t\t\tAny Other Number to exit " +
-                        "\n\t\t\t\tYOUR CHOICE :");
+            case 5:
+                System.out.print("\n\t\t\t\tEnter the corresponding Number to make the choice: " +
+                        "\n\t\t\t\t1 --> Display complete list " +
+                        "\n\t\t\t\t2 --> Display only of paticular CITY and STATE" +
+                        "\n\t\t\t\tYOUR CHOICE --> ");
                 switch (Integer.parseInt(takeInput.nextLine())) {
                     case 1:
                         displayAddressBook();
+                        break;
                     case 2:
-                        return true;
+                        viewByCityAndState();
+                        break;
                     default:
-                        return false;
+                        System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
                 }
+                break;
+            case 6:
+                searchInCityorState();
+                break;
+            default:
+                System.out.print("\n\t\t\t\t## INVALID INPUT ##");
+
         }
+        System.out.print("\n\n\t\t\t\tEnter the corresponding number to make the choice:" +
+                "\n\t\t\t\t1 --> Display AddressBook and go to AddressBook Menu" +
+                "\n\t\t\t\t2 --> Go To AddressBook Menu" +
+                "\n\t\t\t\tAny Other Number to exit " +
+                "\n\t\t\t\tYOUR CHOICE :");
+        switch (Integer.parseInt(takeInput.nextLine())) {
+            case 1:
+                displayAddressBook();
+            case 2:
+                return true;
+            default:
+                return false;
+          }
+    }
+
 
         // METHOD TO ADD A PERSON IN THE ADDRESS BOOK
 
@@ -134,7 +140,7 @@ public class AddressBookMain {
         System.out.print("\n\t\t\t\tEnter the FULL NAME of person to edit --> ");
         String name = takeInput.nextLine();
         for (int index=0 ; index<addressBook.size(); index++) {
-            if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastname()).equalsIgnoreCase(name)) {
+            if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastName()).equalsIgnoreCase(name)) {
                 System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
                         "\n\t\t\t\t1 --> PHONE NUMBER" +
                         "\n\t\t\t\t2 --> HOUSE NUMBER & STREET ADDRESS" +
@@ -178,7 +184,7 @@ public class AddressBookMain {
         String name = takeInput.nextLine();
         boolean deletionDone = false;
         for (int index = 0; index < addressBook.size(); index++) {
-            if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastname()).equalsIgnoreCase(name)) {
+            if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastName()).equalsIgnoreCase(name)) {
                 addressBook.remove(index);
                 deletionDone = true;
                 break;
@@ -192,14 +198,14 @@ public class AddressBookMain {
     public boolean equals(Object o) {
 
         for (Person currentPerson:addressBook) {
-            if ((currentPerson.getFirstName()+" "+currentPerson.getLastname()).equalsIgnoreCase((String) o))
+            if ((currentPerson.getFirstName()+" "+currentPerson.getLastName()).equalsIgnoreCase((String) o))
                 return true;
         }
         return false;
     }
     // METHOD TO SORT THE ADDRESS BOOK BY NAME
     public void sortByName(){
-       addressBook.sort(Comparator.comparing(Person::getFirstName).thenComparing(Person::getLastname));
+       addressBook.sort(Comparator.comparing(Person::getFirstName).thenComparing(Person::getLastName));
     }
     // METHOD TO SORT THE ADDRESS BOOK BY CITY
     public void sortByCity(){
@@ -219,7 +225,7 @@ public class AddressBookMain {
             System.out.print("\n\n"+person);
         }
     }
-    // METHOD TO LIST CONTACTS BY CITY AND STATE
+    // METHOD TO LIST CONTACTS OF A PARTICULAR CITY AND OF A STATE
     public void viewByCityAndState(){
         for (Person person:addressBook) {
             cityAndPerson.put(person.getCity(),person);
@@ -246,4 +252,44 @@ public class AddressBookMain {
             System.out.print("\n\t\t\t\tSuch Combination of CITY AND STATE not present in data");
         }
     }
-}
+    // METHOD TO SEARCH FOR A PERSON IN A CITY OR STATE
+    public void searchInCityorState(){
+        for (Person person:addressBook) {
+            cityAndPerson.put(person.getCity(),person);
+            stateAndPerson.put(person.getState(),person);
+        }
+        System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
+                        "\n\t\t\t\t1 --> Search in a CITY" +
+                        "\n\t\t\t\t2 --> Search in a STATE");
+            switch (Integer.parseInt(takeInput.nextLine())) {
+                case 1:
+                    System.out.print("\n\t\t\t\tEnter the name of CITY -->");
+                    String city = takeInput.nextLine();
+                    System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to be searched -->");
+                    String name = takeInput.nextLine();
+                    for (Map.Entry<String, Person> cityentry : cityAndPerson.entrySet()) {
+                        if (city.equalsIgnoreCase(cityentry.getKey())) {
+                            if ((cityentry.getValue().getFirstName() + " " + cityentry.getValue().getLastName()).equalsIgnoreCase(name)) {
+                                System.out.print("\n\n" + cityentry.getValue());
+                            }
+                        }
+                    }
+                    break;
+                case 2:
+                    System.out.print("\n\t\t\t\tEnter the name of STATE -->");
+                    String state = takeInput.nextLine();
+                    System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to be searched -->");
+                    name = takeInput.nextLine();
+                    for (Map.Entry<String, Person> stateentry : stateAndPerson.entrySet()) {
+                        if (state.equalsIgnoreCase(stateentry.getKey())) {
+                            if ((stateentry.getValue().getFirstName() + " " + stateentry.getValue().getLastName()).equalsIgnoreCase(name)) {
+                                System.out.print("\n\n" + stateentry.getValue());
+                            }
+                        }
+                    }
+                    break;
+                default:
+                    System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
+            }
+        }
+    }

@@ -14,7 +14,7 @@ public class Person {
     // PARAMETERIZED CONSTRUCTOR TO INITIALISE THE VARIABLES
     public Person (String firstName,String lastName,long phoneNumber,String streetAddress,String city,String state,int zip){
         setFirstname(firstName);
-        setLastname(lastName);
+        setLastName(lastName);
         setPhoneNumber(phoneNumber);
         setStreetAddress(streetAddress);
         setCity(city);
@@ -33,11 +33,11 @@ public class Person {
         return firstname;
 }
 
-    public void setLastname(String lastname) {
+    public void setLastName(String lastname) {
         this.lastname = lastname;
     }
 
-    public String getLastname() {
+    public String getLastName() {
         return lastname;
     }
 
