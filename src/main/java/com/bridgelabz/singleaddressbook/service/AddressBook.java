@@ -13,7 +13,7 @@ public class AddressBook {
     private final String NAME_PATTERN="^[A-Z]{1}[a-z]{2,}$";
     private final String PHONE_NUMBER_PATTERN="^[1-9][0-9]{9}$";
     private final String ZIP_PATTERN="^[1-9][0-9]{5}$";
-    private final String ADDRESS_PATTERN="^([a-zA-Z0-9]+[/,-]){30}$";
+    private final String ADDRESS_PATTERN="^(([a-zA-Z0-9]+[ /,-]?)+[a-zA-Z0-9]){1,3}$";
     private final String STATE_NAME_PATTERN="^[A-Z]{1}[A-za-z ]{2,}$";
     /**
      * METHOD TO RETURN ADDRESSBOOK
@@ -92,7 +92,7 @@ public class AddressBook {
             case 5:
                 System.out.print("\n\t\t\t\tEnter the corresponding Number to make the choice: " +
                         "\n\t\t\t\t1 --> Display complete list " +
-                        "\n\t\t\t\t2 --> Display only of paticular CITY and STATE" +
+                        "\n\t\t\t\t2 --> Display only of particular CITY and STATE" +
                         "\n\t\t\t\tYOUR CHOICE --> ");
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
@@ -176,7 +176,8 @@ public class AddressBook {
         System.out.print("\n\t\t\t\tEnter the FULL NAME of person to edit --> ");
         String name = scanner.nextLine();
         for (int index = 0; index < addressBook.size(); index++) {
-            if ((addressBook.get(index).getFirstName() + " " + addressBook.get(index).getLastName()).equalsIgnoreCase(name)) {
+            if ((addressBook.get(index).getFirstName() + " " +
+                    addressBook.get(index).getLastName()).equalsIgnoreCase(name)) {
                 System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
                         "\n\t\t\t\t1 --> PHONE NUMBER" +
                         "\n\t\t\t\t2 --> HOUSE NUMBER & STREET ADDRESS" +
@@ -299,11 +300,11 @@ public class AddressBook {
         System.out.print("\n\t\t\t\tEnter STATE --> ");
         String state = scanner.nextLine();
         boolean combinationPresent = false;
-        for (Map.Entry<String, Person> stateentry : stateAndPerson.entrySet()) {
-            if (state.equalsIgnoreCase(stateentry.getKey())) {
-                for (Map.Entry<String, Person> cityentry : cityAndPerson.entrySet()) {
-                    if (city.equalsIgnoreCase(cityentry.getKey())) {
-                        System.out.print(cityentry.getValue());
+        for (Map.Entry<String, Person> stateEntry : stateAndPerson.entrySet()) {
+            if (state.equalsIgnoreCase(stateEntry.getKey())) {
+                for (Map.Entry<String, Person> cityEntry : cityAndPerson.entrySet()) {
+                    if (city.equalsIgnoreCase(cityEntry.getKey())) {
+                        System.out.print(cityEntry.getValue());
                         combinationPresent = true;
                     }
                 }
@@ -347,10 +348,10 @@ public class AddressBook {
                 String state = scanner.nextLine();
                 System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to be searched -->");
                 name = scanner.nextLine();
-                for (Map.Entry<String, Person> stateentry : stateAndPerson.entrySet()) {
-                    if (state.equalsIgnoreCase(stateentry.getKey())) {
-                        if ((stateentry.getValue().getFirstName() + " " + stateentry.getValue().getLastName()).equalsIgnoreCase(name)) {
-                            System.out.print("\n\n" + stateentry.getValue());
+                for (Map.Entry<String, Person> stateEntry : stateAndPerson.entrySet()) {
+                    if (state.equalsIgnoreCase(stateEntry.getKey())) {
+                        if ((stateEntry.getValue().getFirstName() + " " + stateEntry.getValue().getLastName()).equalsIgnoreCase(name)) {
+                            System.out.print("\n\n" + stateEntry.getValue());
                             entryFound = true;
                         }
                     }
