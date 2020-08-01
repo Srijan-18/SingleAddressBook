@@ -21,10 +21,6 @@ public class AddressBook {
         return addressBook;
     }
 
-    public void setAddressBook(List<Person> addressBook) {
-        this.addressBook = addressBook;
-    }
-
     /**
      * METHOD TO ADD A PERSON IN THE ADDRESS BOOK
      */
@@ -191,5 +187,21 @@ public class AddressBook {
         if (!entryFound.get()) {
             System.out.print("\n\t\t\t\tNo Such Combination of Entries Exist");
         }
+    }
+
+    public void readFromJson() {
+        addressBook = new JSONUsingJavaFileHandlers().readFromFile();
+    }
+
+    public void readFromCSV() {
+        addressBook = new CSVUsingOpenCSV().readFromFile();
+    }
+
+    public void writeInJSON() {
+        new JSONUsingJavaFileHandlers().writeToFile(addressBook);
+    }
+
+    public void writeInCSV() {
+        new CSVUsingOpenCSV().writeToFile(addressBook);
     }
 }

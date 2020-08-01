@@ -1,16 +1,33 @@
 package com.bridgelabz.singleaddressbook.model;
 
+import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
+
 public class Person {
     /**
      * VARIABLES TO STORE DETAILS OF A PERSON
      */
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
+
+    @CsvBindByName(required = true, column = "FIRST NAME")
+    private final String firstName;
+
+    @CsvBindByName(required = true, column = "LAST NAME")
+    private final String lastName;
+
+    @CsvBindByName(required = true, column = "STREET ADDRESS")
     private String streetAddress;
+
+    @CsvBindByName(required = true, column = "CITY")
     private String city;
+
+    @CsvBindByName(required = true, column = "STATE")
     private String state;
+
+    @CsvBindByName(required = true, column = "ZIP")
     private int zip;
+
+    @CsvBindByName(required = true, column = "MOBILE NO.")
+    private String phoneNumber;
 
     /**
      * PARAMETERIZED CONSTRUCTOR TO INITIALISE THE VARIABLES
@@ -22,15 +39,15 @@ public class Person {
      * @param state
      * @param zip
      */
-    public Person(String firstName, String lastName, String phoneNumber, String streetAddress, String city, String state, int zip) {
-        setFirstName(firstName);
-        setLastName(lastName);
+    public Person(String firstName, String lastName, String phoneNumber, String streetAddress, String city,
+                  String state, int zip) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         setPhoneNumber(phoneNumber);
         setStreetAddress(streetAddress);
         setCity(city);
         setState(state);
         setZip(zip);
-
     }
 
     /**
@@ -41,16 +58,8 @@ public class Person {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
     public String getLastName() {
         return lastName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
     }
 
     public String getPhoneNumber() {

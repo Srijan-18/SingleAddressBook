@@ -2,7 +2,6 @@ package com.bridgelabz.singleaddressbook.controller;
 
 import com.bridgelabz.singleaddressbook.enums.SortTechnique;
 import com.bridgelabz.singleaddressbook.service.AddressBook;
-import com.bridgelabz.singleaddressbook.service.JSONUsingJavaFileHandlers;
 
 import java.util.Scanner;
 
@@ -14,7 +13,7 @@ public class AddressBookMain {
         AddressBookMain addressBookMain = new AddressBookMain();
         boolean choice = true;
         while (choice) {
-                choice = addressBookMain.addressBookMenu(obj);
+            choice = addressBookMain.addressBookMenu(obj);
         }
     }
 
@@ -92,7 +91,20 @@ public class AddressBookMain {
                 addressBook.searchInCityOrState();
                 break;
             case 7:
-                addressBook.setAddressBook(new JSONUsingJavaFileHandlers().readFromFile());
+                System.out.print("\n\t\t\t\tEnter the corresponding Number to make the choice: " +
+                        "\n\t\t\t\t1 --> Read From JSON" +
+                        "\n\t\t\t\t2 --> Read From CSV" +
+                        "\n\t\t\t\tYOUR CHOICE --> ");
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        addressBook.readFromJson();
+                        break;
+                    case 2:
+                        addressBook.readFromCSV();
+                        break;
+                    default:
+                        System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
+                }
             default:
         }
         System.out.print("\n\n\t\t\t\tEnter the corresponding number to make the choice:" +
@@ -106,7 +118,20 @@ public class AddressBookMain {
             case 2:
                 return true;
             default:
-                new JSONUsingJavaFileHandlers().writeToFile(addressBook.getAddressBook());
+                System.out.print("\n\t\t\t\tEnter the corresponding Number to make the choice: " +
+                        "\n\t\t\t\t1 --> Write in JSON Format" +
+                        "\n\t\t\t\t2 --> Write in CSV Format" +
+                        "\n\t\t\t\tYOUR CHOICE --> ");
+                switch (Integer.parseInt(scanner.nextLine())) {
+                    case 1:
+                        addressBook.writeInJSON();
+                        break;
+                    case 2:
+                        addressBook.writeInCSV();
+                        break;
+                    default:
+                        System.out.println("\n\t\t\t\t ## INVALID INPUT , FILE NOT SAVED ##");
+                }
                 return false;
         }
     }
