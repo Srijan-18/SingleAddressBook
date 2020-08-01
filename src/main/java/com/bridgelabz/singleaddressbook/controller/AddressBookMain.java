@@ -17,11 +17,6 @@ public class AddressBookMain {
         }
     }
 
-    /**
-     * METHOD TO DISPLAY MENU OF OPERATIONS
-     *
-     * @return
-     */
     public boolean addressBookMenu(AddressBook addressBook) {
         Scanner scanner = new Scanner(System.in);
         System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice: " +

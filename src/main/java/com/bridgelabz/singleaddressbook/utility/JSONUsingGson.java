@@ -1,16 +1,16 @@
-package com.bridgelabz.singleaddressbook.service;
+package com.bridgelabz.singleaddressbook.utility;
 
 import com.bridgelabz.singleaddressbook.model.Person;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class JSONUsingGson implements FileReadAndWrite{
-    @Override
+public class JSONUsingGson {
+
     public void writeToFile(List<Person> addressBookList) {
         try (Writer writer = new FileWriter("F:\\Fellowship\\src\\main\\resources\\AddressBook.json")) {
             Gson gson = new GsonBuilder().create();
@@ -20,8 +20,15 @@ public class JSONUsingGson implements FileReadAndWrite{
         }
     }
 
-    @Override
     public List<Person> readFromFile() {
-        return null;
+        List<Person> addressBook = null;
+        try {
+            Person[] personDetails = new Gson().fromJson
+                    (new FileReader("F:\\Fellowship\\src\\main\\resources\\AddressBook.json"), Person[].class);
+            addressBook = new ArrayList<>(Arrays.asList(personDetails));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return addressBook;
     }
 }

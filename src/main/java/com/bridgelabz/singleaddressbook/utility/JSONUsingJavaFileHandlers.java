@@ -1,4 +1,4 @@
-package com.bridgelabz.singleaddressbook.service;
+package com.bridgelabz.singleaddressbook.utility;
 
 import com.bridgelabz.singleaddressbook.model.Person;
 import org.json.simple.JSONArray;
@@ -12,10 +12,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JSONUsingJavaFileHandlers implements FileReadAndWrite {
+public class JSONUsingJavaFileHandlers {
 
     @SuppressWarnings("unchecked")
-    @Override
     public void writeToFile(List<Person> personList) {
         JSONArray personJSONArray = new JSONArray();
         personList.forEach(person -> {
@@ -40,22 +39,21 @@ public class JSONUsingJavaFileHandlers implements FileReadAndWrite {
         }
     }
     @SuppressWarnings("unchecked")
-    @Override
     public List<Person> readFromFile() {
         JSONParser jsonParser = new JSONParser();
         List<Person> addressBook = new ArrayList<>();
         try (FileReader reader = new FileReader("F:\\Fellowship\\src\\main\\resources\\AddressBook.json"))
         {
-            Object obj = jsonParser.parse(reader);
-            JSONArray personArray = (JSONArray) obj;
-            personArray.forEach(person -> addressBook.add(parseEmployeeObject((JSONObject) person)));
+            Object parseToJson = jsonParser.parse(reader);
+            JSONArray personArray = (JSONArray) parseToJson;
+            personArray.forEach(person -> addressBook.add(parseToPerson((JSONObject) person)));
         } catch (IOException | ParseException e) {
             e.printStackTrace();
         }
         return addressBook;
     }
 
-    private Person parseEmployeeObject(JSONObject person)
+    private Person parseToPerson(JSONObject person)
     {
         JSONObject personObject = (JSONObject) person.get("Details");
         String firstName = String.valueOf(personObject.get("First Name"));

@@ -2,6 +2,9 @@ package com.bridgelabz.singleaddressbook.service;
 
 import com.bridgelabz.singleaddressbook.enums.SortTechnique;
 import com.bridgelabz.singleaddressbook.model.Person;
+import com.bridgelabz.singleaddressbook.utility.CSVUsingOpenCSV;
+import com.bridgelabz.singleaddressbook.utility.JSONUsingGson;
+import com.bridgelabz.singleaddressbook.utility.JSONUsingJavaFileHandlers;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -194,7 +197,6 @@ public class AddressBook {
             personList = new JSONUsingJavaFileHandlers().readFromFile();
         else
             personList = new JSONUsingGson().readFromFile();
-
     }
 
     public void readFromCSV() {

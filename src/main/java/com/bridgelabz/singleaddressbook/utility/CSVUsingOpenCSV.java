@@ -1,4 +1,4 @@
-package com.bridgelabz.singleaddressbook.service;
+package com.bridgelabz.singleaddressbook.utility;
 
 import com.bridgelabz.singleaddressbook.model.Person;
 import com.opencsv.CSVReader;
@@ -17,13 +17,12 @@ import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CSVUsingOpenCSV implements FileReadAndWrite {
+public class CSVUsingOpenCSV {
 
-    @Override
     public void writeToFile(List<Person> addressBookList) {
         try (Writer writer = Files.newBufferedWriter
                 (Paths.get("F:\\Fellowship\\src\\main\\resources\\AddressBook.csv"))) {
-            StatefulBeanToCsv<Person> beanToCsv = new StatefulBeanToCsvBuilder(writer)
+            StatefulBeanToCsv<Person> beanToCsv = new StatefulBeanToCsvBuilder<Person>(writer)
                     .withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
                     .build();
             beanToCsv.write(addressBookList);
@@ -32,7 +31,6 @@ public class CSVUsingOpenCSV implements FileReadAndWrite {
         }
     }
 
-    @Override
     public List<Person> readFromFile() {
         try (
                 Reader reader = Files.newBufferedReader
