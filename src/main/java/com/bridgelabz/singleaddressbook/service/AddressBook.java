@@ -9,7 +9,7 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class AddressBook {
-    private List<Person> addressBook = new ArrayList<>();
+    private List<Person> personList = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
 
     /**
@@ -18,7 +18,7 @@ public class AddressBook {
      * @return addressBook
      */
     public List<Person> getAddressBook() {
-        return addressBook;
+        return personList;
     }
 
     /**
@@ -36,7 +36,7 @@ public class AddressBook {
             String state = userInputAndValidator.getInputForState();
             int zip = userInputAndValidator.getInputForZIP();
             Person currentPerson = new Person(firstName, lastName, phoneNumber, streetAddress, city, state, zip);
-            addressBook.add(currentPerson);
+            personList.add(currentPerson);
 
         } else {
             System.out.print("\n\t\t\t\t ## NAME ALREADY EXISTS ## ");
@@ -50,7 +50,7 @@ public class AddressBook {
         UserInputAndValidator userInputAndValidator = new UserInputAndValidator();
         System.out.print("\n\t\t\t\tEnter the FULL NAME of person to edit --> ");
         String name = scanner.nextLine();
-        addressBook.forEach(person -> {
+        personList.forEach(person -> {
             if ((person.getFirstName() + " " + person.getLastName()).equalsIgnoreCase(name)) {
                 System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
                         "\n\t\t\t\t1 --> PHONE NUMBER" +
@@ -90,9 +90,9 @@ public class AddressBook {
         System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to remove from AddressBook --> ");
         String name = scanner.nextLine();
         boolean deletionDone = false;
-        for (Person person : addressBook) {
+        for (Person person : personList) {
             if ((person.getFirstName() + " " + person.getLastName()).equalsIgnoreCase(name)) {
-                addressBook.remove(person);
+                personList.remove(person);
                 deletionDone = true;
                 System.out.println("\n\t\t\t\t## DELETION SUCCESSFUL ##");
             }
@@ -109,7 +109,7 @@ public class AddressBook {
      */
     @Override
     public boolean equals(Object searchName) {
-        return addressBook.stream().anyMatch(currentPerson -> (currentPerson.getFirstName() + " "
+        return personList.stream().anyMatch(currentPerson -> (currentPerson.getFirstName() + " "
                 + currentPerson.getLastName()).equalsIgnoreCase((String) searchName));
     }
 
@@ -118,14 +118,14 @@ public class AddressBook {
      * @param sortTechnique
      */
     public void sortTheData(SortTechnique sortTechnique) {
-        addressBook.sort(sortTechnique.getComparator());
+        personList.sort(sortTechnique.getComparator());
     }
 
     /**
      * METHOD TO DISPLAY THE ADDRESS BOOK
      */
     public void displayAddressBook() {
-        addressBook.forEach(System.out::println);
+        personList.forEach(System.out::println);
     }
 
     /**
@@ -137,7 +137,7 @@ public class AddressBook {
         System.out.print("\n\t\t\t\tEnter STATE --> ");
         String state = scanner.nextLine();
         AtomicBoolean combinationPresent = new AtomicBoolean(false);
-        addressBook.forEach(person -> {
+        personList.forEach(person -> {
             if (person.getState().equalsIgnoreCase(state) && person.getCity().equalsIgnoreCase(city))
                 System.out.println(person);
             combinationPresent.set(true);
@@ -160,7 +160,7 @@ public class AddressBook {
                 String city = scanner.nextLine();
                 System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to be searched -->");
                 String name = scanner.nextLine();
-                addressBook.forEach(person -> {
+                personList.forEach(person -> {
                     if (person.getFirstName().concat(" " + person.getLastName()).equalsIgnoreCase(name)
                             && person.getCity().equalsIgnoreCase(city)) {
                         System.out.print("\n\n\t\t\t\t" + person);
@@ -173,7 +173,7 @@ public class AddressBook {
                 String state = scanner.nextLine();
                 System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to be searched -->");
                 name = scanner.nextLine();
-                addressBook.forEach(person -> {
+                personList.forEach(person -> {
                     if (person.getFirstName().concat(" " + person.getLastName()).equalsIgnoreCase(name)
                             && person.getState().equalsIgnoreCase(state)) {
                         System.out.print("\n\n\t\t\t\t" + person);
@@ -190,18 +190,25 @@ public class AddressBook {
     }
 
     public void readFromJson() {
-        addressBook = new JSONUsingJavaFileHandlers().readFromFile();
+        if(((Math.floor(Math.random()*1000)) % 2) == 0)
+            personList = new JSONUsingJavaFileHandlers().readFromFile();
+        else
+            personList = new JSONUsingGson().readFromFile();
+
     }
 
     public void readFromCSV() {
-        addressBook = new CSVUsingOpenCSV().readFromFile();
+        personList = new CSVUsingOpenCSV().readFromFile();
     }
 
     public void writeInJSON() {
-        new JSONUsingJavaFileHandlers().writeToFile(addressBook);
+        if(((Math.floor(Math.random()*1000)) % 2) == 0)
+            new JSONUsingJavaFileHandlers().writeToFile(personList);
+        else
+            new JSONUsingGson().writeToFile(personList);
     }
 
     public void writeInCSV() {
-        new CSVUsingOpenCSV().writeToFile(addressBook);
+        new CSVUsingOpenCSV().writeToFile(personList);
     }
 }

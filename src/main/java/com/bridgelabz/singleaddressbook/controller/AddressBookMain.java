@@ -9,11 +9,11 @@ public class AddressBookMain {
 
     public static void main(String[] args) {
         System.out.print("\n\n\t\t\t\t*****WELCOME TO ADDRESS BOOK PROGRAM*****\n\n");
-        AddressBook obj = new AddressBook();
+        AddressBook addressBook = new AddressBook();
         AddressBookMain addressBookMain = new AddressBookMain();
         boolean choice = true;
         while (choice) {
-            choice = addressBookMain.addressBookMenu(obj);
+            choice = addressBookMain.addressBookMenu(addressBook);
         }
     }
 
