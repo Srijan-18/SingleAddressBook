@@ -98,12 +98,12 @@ public class Person {
      */
     @Override
     public String toString() {
-        return "<<First Name: " + firstName + ">>" +
-                "\t<<Lastname: " + lastName + ">>" +
-                "\n<<Phone Number: " + phoneNumber + ">>" +
-                "\n<<Address:" + streetAddress + ">>" +
-                "\t<<City: " + city + ">>" +
-                "\t<<State: " + state + ">>" +
-                "\t<<Zip: " + zip + ">>";
+        return "\n{First Name: " + firstName + "}" +
+                "\t{Last Name: " + lastName + "}" +
+                "\n{Phone Number: " + phoneNumber + "}" +
+                "\n{Address:" + streetAddress + "}" +
+                "\t{City: " + city + "}" +
+                "\t{State: " + state + "}" +
+                "\t{Zip: " + zip + "}\n";
     }
 }
