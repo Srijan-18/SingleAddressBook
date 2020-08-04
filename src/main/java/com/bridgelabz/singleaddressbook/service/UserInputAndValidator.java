@@ -19,8 +19,6 @@ public class UserInputAndValidator {
         Pattern pattern = Pattern.compile(validator);
         if (pattern.matcher(testInput).matches())
             return true;
-        else
-            System.out.print("\n\t\t\t\t ## INVALID INPUT ##\n");
         return false;
     }
 
@@ -79,7 +77,8 @@ public class UserInputAndValidator {
         while(true) {
             System.out.print("\n\t\t\t\tEnter CITY  --> ");
             city = scanner.nextLine();
-            if (patternCheck(city, NAME_PATTERN))
+            String CITY_NAME_PATTERN = "^[A-Z]{1}[A-za-z .]{1,}$";
+            if (patternCheck(city, CITY_NAME_PATTERN))
                 break;
             System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
         }

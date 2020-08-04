@@ -85,13 +85,13 @@ public class AddressBook {
 
     /**
      * METHOD TO DELETE A PERSON
+     * @param nameToDelete
      */
-    public void deletePerson() {
-        System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to remove from AddressBook --> ");
-        String name = scanner.nextLine();
+    public void deletePerson(String nameToDelete) {
         boolean deletionDone = false;
-        for (Person person : addressBook) {
-            if ((person.getFirstName() + " " + person.getLastName()).equalsIgnoreCase(name)) {
+        for (int i = 0, addressBookSize = addressBook.size(); i < addressBookSize; i++) {
+            Person person = addressBook.get(i);
+            if ((person.getFirstName() + " " + person.getLastName()).equalsIgnoreCase(nameToDelete)) {
                 addressBook.remove(person);
                 deletionDone = true;
                 System.out.println("\n\t\t\t\t## DELETION SUCCESSFUL ##");
@@ -130,12 +130,10 @@ public class AddressBook {
 
     /**
      * METHOD TO LIST CONTACTS OF A PARTICULAR CITY AND OF A STATE
+     * @param state
+     * @param city
      */
-    public void viewByCityAndState() {
-        System.out.print("\n\t\t\t\tEnter CITY --> ");
-        String city = scanner.nextLine();
-        System.out.print("\n\t\t\t\tEnter STATE --> ");
-        String state = scanner.nextLine();
+    public void viewByCityAndState(String state, String city) {
         AtomicBoolean combinationPresent = new AtomicBoolean(false);
         addressBook.forEach(person -> {
             if (person.getState().equalsIgnoreCase(state) && person.getCity().equalsIgnoreCase(city))

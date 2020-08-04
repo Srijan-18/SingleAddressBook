@@ -42,14 +42,17 @@ public class AddressBookMain {
                 addressBook.editPersonDetails();
                 break;
             case 3:
-                addressBook.deletePerson();
+                System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to remove from AddressBook --> ");
+                String name = scanner.nextLine();
+                addressBook.deletePerson(name);
                 break;
             case 4:
                 System.out.print("\n\t\t\t\tEnter the corresponding Number to make the choice: " +
                         "\n\t\t\t\t1 --> Sort by NAME" +
                         "\n\t\t\t\t2 --> Sort by CITY" +
                         "\n\t\t\t\t3 --> Sort by STATE" +
-                        "\n\t\t\t\t4 --> Sort by ZIP");
+                        "\n\t\t\t\t4 --> Sort by ZIP" +
+                        "\n\t\t\t\tYOUR CHOICE --> ");
                 switch (Integer.parseInt(scanner.nextLine())) {
                     case 1:
                         addressBook.sortTheData(SortTechnique.SORT_BY_NAME);
@@ -81,7 +84,11 @@ public class AddressBookMain {
                         addressBook.displayAddressBook();
                         break;
                     case 2:
-                        addressBook.viewByCityAndState();
+                        System.out.print("\n\t\t\t\tEnter CITY --> ");
+                        String city = scanner.nextLine();
+                        System.out.print("\n\t\t\t\tEnter STATE --> ");
+                        String state = scanner.nextLine();
+                        addressBook.viewByCityAndState(state, city);
                         break;
                     default:
                         System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
@@ -111,7 +118,7 @@ public class AddressBookMain {
                 "\n\t\t\t\t1 --> Display AddressBook and go to AddressBook Menu" +
                 "\n\t\t\t\t2 --> Go To AddressBook Menu" +
                 "\n\t\t\t\tAny Other Number to save and exit " +
-                "\n\t\t\t\tYOUR CHOICE :");
+                "\n\t\t\t\tYOUR CHOICE --> ");
         switch (Integer.parseInt(scanner.nextLine())) {
             case 1:
                 addressBook.displayAddressBook();
