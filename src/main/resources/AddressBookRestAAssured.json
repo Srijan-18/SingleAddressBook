@@ -1,0 +1,31 @@
+{
+  "addressBook": [
+    {
+      "firstName": "Srijan",
+      "lastName": "Mishra",
+      "city": "gzb",
+      "state": "up",
+      "zipCode": "147852",
+      "phone": "9876543210",
+      "id": 1
+    },
+    {
+      "id": 2,
+      "firstName": "Gaurav",
+      "lastName": "Kumar",
+      "city": "Panjim",
+      "state": "Goa",
+      "zipCode": "123456",
+      "phone": "8794561230"
+    },
+    {
+      "firstName": "Saurav",
+      "lastName": "Gupta",
+      "city": "Mumbai",
+      "state": "Maharashtra",
+      "zipCode": "478596",
+      "phone": "7531594862",
+      "id": 4
+    }
+  ]
+}
