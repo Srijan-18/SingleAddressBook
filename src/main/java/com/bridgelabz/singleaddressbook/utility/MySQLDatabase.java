@@ -63,7 +63,7 @@ public class MySQLDatabase {
         return count != 0;
     }
 
-    public boolean updateDetails (String firstName, String lastName, UpdateCategory updateCategory, String updateData) {
+    private boolean updateDetails (String firstName, String lastName, UpdateCategory updateCategory, String updateData) {
         String query;
         try {
             switch (updateCategory) {
