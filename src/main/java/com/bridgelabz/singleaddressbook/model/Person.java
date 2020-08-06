@@ -1,12 +1,8 @@
 package com.bridgelabz.singleaddressbook.model;
 
 import com.opencsv.bean.CsvBindByName;
-import com.opencsv.bean.CsvBindByPosition;
 
 public class Person {
-    /**
-     * VARIABLES TO STORE DETAILS OF A PERSON
-     */
 
     @CsvBindByName(required = true, column = "FIRST NAME")
     private final String firstName;
@@ -29,16 +25,6 @@ public class Person {
     @CsvBindByName(required = true, column = "MOBILE NO.")
     private String phoneNumber;
 
-    /**
-     * PARAMETERIZED CONSTRUCTOR TO INITIALISE THE VARIABLES
-     * @param firstName
-     * @param lastName
-     * @param phoneNumber
-     * @param streetAddress
-     * @param city
-     * @param state
-     * @param zip
-     */
     public Person(String firstName, String lastName, String phoneNumber, String streetAddress, String city,
                   String state, int zip) {
         this.firstName = firstName;
@@ -50,10 +36,6 @@ public class Person {
         setZip(zip);
     }
 
-    /**
-     * GETTER AND SETTER METHODS FOR EACH VARIABLE RESPECTIVELY
-     * @return their respective required fields
-     */
     public String getFirstName() {
         return firstName;
     }

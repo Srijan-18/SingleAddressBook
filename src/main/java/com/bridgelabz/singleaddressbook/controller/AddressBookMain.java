@@ -2,23 +2,44 @@ package com.bridgelabz.singleaddressbook.controller;
 
 import com.bridgelabz.singleaddressbook.enums.SortTechnique;
 import com.bridgelabz.singleaddressbook.service.AddressBook;
+import com.bridgelabz.singleaddressbook.service.UserInputAndValidator;
+import com.bridgelabz.singleaddressbook.utility.MySQLDatabase;
 
 import java.util.Scanner;
 
 public class AddressBookMain {
+    private final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         System.out.print("\n\n\t\t\t\t*****WELCOME TO ADDRESS BOOK PROGRAM*****\n\n");
         AddressBook addressBook = new AddressBook();
         AddressBookMain addressBookMain = new AddressBookMain();
+        Scanner scanner = new Scanner(System.in);
         boolean choice = true;
         while (choice) {
-            choice = addressBookMain.addressBookMenu(addressBook);
+            System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice: " +
+                    "\n\t\t\t\t1 --> Use Csv or Json" +
+                    "\n\t\t\t\t2 --> Use DataBase" +
+                    "\n\t\t\t\t9 --> To Exit." +
+                    "\n\t\t\t\tYOUR CHOICE --> ");
+            switch (Integer.parseInt(scanner.nextLine())) {
+                case 1:
+                    choice = addressBookMain.addressBookMenu(addressBook);
+                    break;
+                case 2:
+                    choice = addressBookMain.addressBookDataBaseMenu();
+                    break;
+                case 9:
+                    choice = false;
+                    break;
+                default:
+                    System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
+            }
+
         }
     }
 
-    public boolean addressBookMenu(AddressBook addressBook) {
-        Scanner scanner = new Scanner(System.in);
+    private boolean addressBookMenu(AddressBook addressBook) {
         System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice: " +
                 "\n\t\t\t\t1 --> Add Details of a new Person" +
                 "\n\t\t\t\t2 --> Edit Details of an existing Person" +
@@ -129,5 +150,62 @@ public class AddressBookMain {
                 }
                 return false;
         }
+    }
+
+    private boolean addressBookDataBaseMenu() {
+        UserInputAndValidator userInputAndValidator = new UserInputAndValidator();
+        MySQLDatabase mySQLDatabase = new MySQLDatabase();
+        boolean choice = true;
+        while (choice) {
+            System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice: " +
+                    "\n\t\t\t\t1 --> Add Details of a new Person" +
+                    "\n\t\t\t\t2 --> Edit Details of an existing Person" +
+                    "\n\t\t\t\t3 --> Delete an existing Person from AddressBook" +
+                    "\n\t\t\t\t4 --> Display all Entries" +
+                    "\n\t\t\t\t9 --> Exit" +
+                    "\n\t\t\t\tYOUR CHOICE --> ");
+            switch (Integer.parseInt(scanner.nextLine())) {
+                case 1:
+                    String firstName = userInputAndValidator.getInputForFirstName();
+                    String lastName = userInputAndValidator.inputForLastName();
+                    if (!mySQLDatabase.isPersonPresent(firstName, lastName))
+                        mySQLDatabase.add(userInputAndValidator.getConsolidatedPersonInformation(firstName, lastName));
+                    else
+                        System.out.println("\n\t\t\t\t ENTRY ALREADY PRESENT");
+                    choice = true;
+                    break;
+                case 2:
+                    System.out.println("\n\t\t\t\tEnter First Name of the entry to delete -->");
+                    String firstname = scanner.nextLine();
+                    System.out.println("\n\t\t\t\tEnter Last Name of the entry to delete -->");
+                    String lastname = scanner.nextLine();
+                    if (mySQLDatabase.isPersonPresent(firstname, lastname)) {
+                        System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
+                                "\n\t\t\t\t1 --> PHONE NUMBER" +
+                                "\n\t\t\t\t2 --> HOUSE NUMBER & STREET ADDRESS" +
+                                "\n\t\t\t\t3 --> CITY" +
+                                "\n\t\t\t\t4 --> STATE" +
+                                "\n\t\t\t\t5 --> ZIP" +
+                                "\n\t\t\t\tYOUR CHOICE --> ");
+                        choice = mySQLDatabase.updateFieldSegregation(Integer.parseInt(scanner.nextLine()),
+                                firstname, lastname);
+                    }
+                    break;
+                case 3:
+                    System.out.print("\n\t\t\t\tEnter First Name of the entry to delete -->");
+                    firstname = scanner.nextLine();
+                    System.out.print("\n\t\t\t\tEnter Last Name of the entry to delete -->");
+                    lastname = scanner.nextLine();
+                    if(mySQLDatabase.delete(firstname, lastname))
+                        System.out.println("DELETION SUCCESSFUL");
+                    break;
+                case 4:
+                    mySQLDatabase.display();
+                    break;
+                case 9:
+                    System.exit(0);
+            }
+        }
+        return true;
     }
 }

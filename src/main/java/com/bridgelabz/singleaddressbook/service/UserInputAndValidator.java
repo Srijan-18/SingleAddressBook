@@ -1,5 +1,7 @@
 package com.bridgelabz.singleaddressbook.service;
 
+import com.bridgelabz.singleaddressbook.model.Person;
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -110,5 +112,10 @@ public class UserInputAndValidator {
             System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
         }
         return Integer.parseInt(zip);
+    }
+    public Person getConsolidatedPersonInformation(String firstName, String lastName) {
+        return new Person(firstName, lastName, this.getInputForPhoneNumber(),
+                           this.getInputForHouseNumberAndStreetAddress(),
+                           this.getInputForCity(), this.getInputForState(), this.getInputForZIP());
     }
 }
