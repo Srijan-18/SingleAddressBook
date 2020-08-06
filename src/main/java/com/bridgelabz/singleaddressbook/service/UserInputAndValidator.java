@@ -10,23 +10,12 @@ public class UserInputAndValidator {
     private final Scanner scanner = new Scanner(System.in);
     private final String NAME_PATTERN = "^[A-Z]{1}[a-z]{2,}$";
 
-    /**
-     * METHOD TO MATCH PATTERN AND RETURN RESULT
-     *
-     * @param testInput
-     * @param validator
-     * @return
-     */
     private boolean patternCheck(String testInput, String validator) {
         Pattern pattern = Pattern.compile(validator);
-        if (pattern.matcher(testInput).matches())
-            return true;
-        else
-            System.out.print("\n\t\t\t\t ## INVALID INPUT ##\n");
-        return false;
+        return pattern.matcher(testInput).matches();
     }
 
-    public String inputForLastName() {
+    public String getInputForLastName() {
         String lastName;
         while (true) {
             System.out.print("\n\t\t\t\tEnter LAST NAME --> ");
@@ -81,7 +70,8 @@ public class UserInputAndValidator {
         while(true) {
             System.out.print("\n\t\t\t\tEnter CITY  --> ");
             city = scanner.nextLine();
-            if (patternCheck(city, NAME_PATTERN))
+            String CITY_NAME_PATTERN = "^[A-Z]{1}[A-za-z .]{1,}$";
+            if (patternCheck(city, CITY_NAME_PATTERN))
                 break;
             System.out.print("\n\t\t\t\t ## INVALID INPUT ##");
         }

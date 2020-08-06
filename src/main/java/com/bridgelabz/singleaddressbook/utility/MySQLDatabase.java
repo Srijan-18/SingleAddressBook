@@ -4,7 +4,11 @@ import com.bridgelabz.singleaddressbook.enums.UpdateCategory;
 import com.bridgelabz.singleaddressbook.model.Person;
 import com.bridgelabz.singleaddressbook.service.UserInputAndValidator;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.sql.ResultSet;
 
 public class MySQLDatabase {
 
@@ -14,15 +18,15 @@ public class MySQLDatabase {
         try {
             String DB_URL = "jdbc:mysql://localhost:3306/address_book";
             String USER = "root";
-            String PASS = "";
-            Connection connection = DriverManager.getConnection(DB_URL, USER, PASS);
+            String PASSWORD = "";
+            Connection connection = DriverManager.getConnection(DB_URL, USER, PASSWORD);
             statement = connection.createStatement();
         } catch (SQLException sqlException) {
             sqlException.printStackTrace();
         }
     }
 
-    public void add (Person person) {
+    public void addAnEntryToDataBase(Person person) {
         String query = "INSERT INTO address_book_data VALUES('" + person.getFirstName() + "', '"
                 + person.getLastName() + "', '"
                 + person.getPhoneNumber() + "', '"
@@ -37,7 +41,7 @@ public class MySQLDatabase {
         }
     }
 
-    public boolean delete (String firstName, String lastName) {
+    public boolean deleteAnEntryFromDatabase(String firstName, String lastName) {
         String query = "DELETE FROM address_book_data WHERE First_Name ='" + firstName
                 +"' AND Last_Name ='" + lastName + "'";
         boolean deletionStatus = false;
@@ -109,12 +113,12 @@ public class MySQLDatabase {
         return false;
     }
 
-    public void display() {
+    public void displayAllEntries() {
         String query = "SELECT * FROM address_book_data";
         try {
             ResultSet rs = statement.executeQuery(query);
             while(rs.next()) {
-                System.out.print("\n\nName :" + rs.getString("First_Name") + " "
+                System.out.println("\nName :" + rs.getString("First_Name") + " "
                                               + rs.getString("Last_Name")+
                                     "\nPhone Number :" + rs.getString("Phone_Number") +
                                     "\nAddress :"+ rs.getString("Address") +
@@ -122,8 +126,8 @@ public class MySQLDatabase {
                                     "\nState :" + rs.getString("State") +
                                     "\nZip Code :" + rs.getInt("Zip"));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }

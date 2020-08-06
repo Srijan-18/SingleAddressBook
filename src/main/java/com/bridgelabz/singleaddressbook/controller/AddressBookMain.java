@@ -167,9 +167,10 @@ public class AddressBookMain {
             switch (Integer.parseInt(scanner.nextLine())) {
                 case 1:
                     String firstName = userInputAndValidator.getInputForFirstName();
-                    String lastName = userInputAndValidator.inputForLastName();
+                    String lastName = userInputAndValidator.getInputForLastName();
                     if (!mySQLDatabase.isPersonPresent(firstName, lastName))
-                        mySQLDatabase.add(userInputAndValidator.getConsolidatedPersonInformation(firstName, lastName));
+                        mySQLDatabase.addAnEntryToDataBase(userInputAndValidator
+                                .getConsolidatedPersonInformation(firstName, lastName));
                     else
                         System.out.println("\n\t\t\t\t ENTRY ALREADY PRESENT");
                     choice = true;
@@ -196,11 +197,11 @@ public class AddressBookMain {
                     firstname = scanner.nextLine();
                     System.out.print("\n\t\t\t\tEnter Last Name of the entry to delete -->");
                     lastname = scanner.nextLine();
-                    if(mySQLDatabase.delete(firstname, lastname))
+                    if(mySQLDatabase.deleteAnEntryFromDatabase(firstname, lastname))
                         System.out.println("DELETION SUCCESSFUL");
                     break;
                 case 4:
-                    mySQLDatabase.display();
+                    mySQLDatabase.displayAllEntries();
                     break;
                 case 9:
                     System.exit(0);

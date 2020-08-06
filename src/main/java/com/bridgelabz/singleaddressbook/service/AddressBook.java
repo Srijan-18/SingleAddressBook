@@ -15,23 +15,11 @@ public class AddressBook {
     private List<Person> personList = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
 
-    /**
-     * METHOD TO RETURN ADDRESS BOOK
-     *
-     * @return addressBook
-     */
-    public List<Person> getAddressBook() {
-        return personList;
-    }
-
-    /**
-     * METHOD TO ADD A PERSON IN THE ADDRESS BOOK
-     */
     public void addPerson() {
         UserInputAndValidator userInputAndValidator = new UserInputAndValidator();
         System.out.print("\n\t\t\t\tEnter Details of new Individual :");
         String firstName = userInputAndValidator.getInputForFirstName();
-        String lastName = userInputAndValidator.inputForLastName();
+        String lastName = userInputAndValidator.getInputForLastName();
         if (!equals(firstName + " " + lastName)) {
             String phoneNumber = userInputAndValidator.getInputForPhoneNumber();
             String streetAddress = userInputAndValidator.getInputForHouseNumberAndStreetAddress();
@@ -86,9 +74,6 @@ public class AddressBook {
         });
     }
 
-    /**
-     * METHOD TO DELETE A PERSON
-     */
     public void deletePerson() {
         System.out.print("\n\t\t\t\tEnter the FULL NAME of Person to remove from AddressBook --> ");
         String name = scanner.nextLine();
@@ -104,36 +89,20 @@ public class AddressBook {
             System.out.print("\n\t\t\t\t## NO SUCH PERSON IN LIST ##");
     }
 
-    /**
-     * METHOD TO CHECK IF NAME ALREADY PRESENT IN ADDRESS BOOK (OVERRIDING THE EXISTING equals() METHOD OF OBJECT CLASS)
-     *
-     * @param searchName
-     * @return
-     */
     @Override
     public boolean equals(Object searchName) {
         return personList.stream().anyMatch(currentPerson -> (currentPerson.getFirstName() + " "
                 + currentPerson.getLastName()).equalsIgnoreCase((String) searchName));
     }
 
-    /**
-     * METHOD TO SORT THE DATA ACCORDING TO COMPARATOR IN ARGUMENTS
-     * @param sortTechnique
-     */
     public void sortTheData(SortTechnique sortTechnique) {
         personList.sort(sortTechnique.getComparator());
     }
 
-    /**
-     * METHOD TO DISPLAY THE ADDRESS BOOK
-     */
     public void displayAddressBook() {
         personList.forEach(System.out::println);
     }
 
-    /**
-     * METHOD TO LIST CONTACTS OF A PARTICULAR CITY AND OF A STATE
-     */
     public void viewByCityAndState() {
         System.out.print("\n\t\t\t\tEnter CITY --> ");
         String city = scanner.nextLine();
@@ -149,9 +118,6 @@ public class AddressBook {
             System.out.print("\n\t\t\t\tSuch Combination of CITY AND STATE not present in data");
     }
 
-    /**
-     * METHOD TO SEARCH FOR A PERSON IN A CITY OR STATE
-     */
     public void searchInCityOrState() {
         AtomicBoolean entryFound = new AtomicBoolean(false);
         System.out.print("\n\t\t\t\tEnter the corresponding number to make the choice:" +
